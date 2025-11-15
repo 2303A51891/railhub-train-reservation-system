@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Train Coach</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color:  #0066cc;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        #coachSelection {
+            margin: 20px auto;
+        }
+
+        .coach {
+            display: inline-block;
+            padding: 15px;
+            margin: 10px;
+            border: 2px solid  #0066cc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .coach:hover {
+            transform: scale(1.1);
+            background-color: #e0f7fa;
+            border:3px solid #034689;
+            
+        }
+
+        .coach.selected {
+            background-color: #50de30;
+            color: white;
+        }
+
+        #passengerCount {
+            margin-top: 20px;
+        }
+
+        #totalPrice {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        #proceedButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color:  #0066cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #proceedButton:hover {
+            background-color:  #044c94;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Select Your Train Coach</h1>
+    </header>
+
+    <main>
+        <section id="coachSelection">
+            <h2>Click to Select Your Coach</h2>
+            <div id="coachGrid">
+                <div class="coach" onclick="selectCoach('General', 50)">
+                    <h3>General</h3>
+                    <p>Price: ₹50</p>
+                </div>
+                <div class="coach" onclick="selectCoach('Sleeper Class', 100)">
+                    <h3>Sleeper Class</h3>
+                    <p>Price: ₹100</p>
+                </div>
+                <div class="coach" onclick="selectCoach('Third AC', 300)">
+                    <h3>Third AC</h3>
+                    <p>Price: ₹300</p>
+                </div>
+                <div class="coach" onclick="selectCoach('Second AC', 500)">
+                    <h3>Second AC</h3>
+                    <p>Price: ₹500</p>
+                </div>
+                <div class="coach" onclick="selectCoach('First AC', 700)">
+                    <h3>First AC</h3>
+                    <p>Price: ₹700</p>
+                </div>
+            </div>
+
+            <label for="passengerCount">Number of Passengers (Max 10):</label>
+            <input type="number" id="passengerCount" min="1" max="10" value="1" onchange="calculateTotal()">
+
+            <p id="totalPrice">Total Price: ₹0</p>
+            <button id="proceedButton" onclick="proceedToPayment()">Proceed to Payment</button>
+        </section>
+    </main>
+
+    <script>
+        let selectedCoach = null;
+        let coachPrice = 0;
+
+        function selectCoach(coachName, price) {
+            selectedCoach = coachName;
+            coachPrice = price;
+
+            // Highlight the selected coach
+            const allCoaches = document.querySelectorAll('.coach');
+            allCoaches.forEach(coach => coach.classList.remove('selected'));
+
+            const selectedCoachElement = event.target;
+            selectedCoachElement.classList.add('selected');
+
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const passengerCount = document.getElementById("passengerCount").value;
+            if (selectedCoach && passengerCount > 0) {
+                const totalPrice = passengerCount * coachPrice;
+                document.getElementById("totalPrice").textContent = `Total Price: ₹${totalPrice}`;
+            }
+        }
+
+        function proceedToPayment() {
+            const passengerCount = document.getElementById("passengerCount").value;
+
+            if (!selectedCoach || !passengerCount) {
+                alert("Please select a coach and enter the number of passengers.");
+                return;
+            }
+
+            localStorage.setItem("selectedCoach", selectedCoach);
+            localStorage.setItem("coachPrice", coachPrice);
+            localStorage.setItem("passengerCount", passengerCount);
+
+            window.location.href = "payment.html";
+        }
+    </script>
+</body>
+</html>

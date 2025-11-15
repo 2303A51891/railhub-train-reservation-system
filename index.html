@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Train Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+
+#dashboardIcon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+        }
+
+        #dashboardIcon:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RailHub</h1>
+        <div id="dashboardIcon" onclick="goToDashboard()">🏠</div>
+    </header>
+
+    <main>
+        <section class="booking-form">
+            <h2>Book Your Train Ticket</h2>
+            <form id="trainForm">
+                <label for="passengerName">Passenger Name:</label>
+                <input type="text" id="passengerName" name="passengerName" required>
+
+                <label for="from">From:</label>
+                <select id="from" name="from" required>
+                    <option value="">Select From</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Agra">Agra</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Amritsar">Amritsar</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Tirupati">Tirupati</option>
+                </select>
+
+                <label for="to">To:</label>
+                <select id="to" name="to" required>
+                    <option value="">Select To</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Agra">Agra</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Amritsar">Amritsar</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Tirupati">Tirupati</option>
+                </select>
+
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <button type="button" onclick="goToAvailableTrains()">Search Trains</button>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        function goToAvailableTrains() {
+            const passengerName = document.getElementById("passengerName").value;
+            const from = document.getElementById("from").value;
+            const to = document.getElementById("to").value;
+            const date = document.getElementById("date").value;
+
+            if (!passengerName || !from || !to || !date || from === to) {
+                alert("Please fill in all fields and ensure 'From' and 'To' are different.");
+                return;
+            }
+
+            localStorage.setItem("passengerName", passengerName);
+            localStorage.setItem("from", from);
+            localStorage.setItem("to", to);
+            localStorage.setItem("date", date);
+
+            window.location.href = "available-trains.html";
+        }
+
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #dashboardIcon {
+            font-size: 30px;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #990000;
+            padding: 10px;
+            border-radius: 50%;
+            color: white;
+            text-align: center;
+        }
+
+        #dashboardIcon:hover {
+            background-color: #990000;
+        }
+
+ .button-container button {
+    padding: 10px 20px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.button-container button:first-child {
+    background-color: #007BFF; /* Blue Back to Home */
+}
+
+.button-container button:first-child:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.button-container button:last-child {
+    background-color: #be1b1b; /* Logout remains red */
+}
+
+.button-container button:last-child:hover {
+    background-color: #990000;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Dashboard</h1>
+        <div id="dashboardIcon" onclick="goToDashboard()">🏠</div>
+    </header>
+
+    <main>
+        <section>
+            <h2>User Information</h2>
+            <div id="userInfo"></div>
+
+            <h3>Booking Information</h3>
+            <div id="bookingDetails"></div>
+
+            <div class="button-container">
+                <button onclick="goBack()">Back to Home</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        function loadUserInfo() {
+            const username = localStorage.getItem("username");
+            const mobile = localStorage.getItem("mobile");
+            const email = localStorage.getItem("email");
+
+            const userInfoMessage = `
+                <strong>Username:</strong> ${username} <br>
+                <strong>Mobile Number:</strong> ${mobile} <br>
+                <strong>Email:</strong> ${email} <br>
+            `;
+
+            document.getElementById("userInfo").innerHTML = userInfoMessage;
+        }
+
+        function loadBookingDetails() {
+            const selectedCoach = localStorage.getItem("selectedCoach");
+            const coachPrice = localStorage.getItem("coachPrice");
+            const passengerCount = localStorage.getItem("passengerCount");
+            const paymentMethod = localStorage.getItem("paymentMethod");
+            const ticketNumbers = JSON.parse(localStorage.getItem("ticketNumbers"));
+
+            const bookingDetailsMessage = `
+                <strong>Coach:</strong> ${selectedCoach} <br>
+                <strong>Price per Passenger:</strong> ₹${coachPrice} <br>
+                <strong>Number of Passengers:</strong> ${passengerCount} <br>
+                <strong>Total Price:</strong> ₹${coachPrice * passengerCount} <br>
+                <strong>Payment Method:</strong> ${paymentMethod} <br>
+                <strong>Status:</strong> Payment Successful! <br>
+            `;
+
+            document.getElementById("bookingDetails").innerHTML = bookingDetailsMessage;
+
+            if (ticketNumbers && ticketNumbers.length > 0) {
+                document.getElementById("ticketNumbers").textContent = ticketNumbers.join(", ");
+            }
+        }
+
+        loadUserInfo();
+        loadBookingDetails();
+
+        function goToDashboard() {
+            window.location.href = "dashboard.html";
+        }
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

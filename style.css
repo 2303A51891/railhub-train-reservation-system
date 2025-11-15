@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f7fc;
+    color: #333;
+}
+
+header {
+    background-color: #0066cc; /* Blue */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.booking-form, .train-results, .coach-selection, .ticket-details, .payment-section {
+    background-color: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+}
+
+h2 {
+    color: #0066cc;
+    margin-bottom: 1em;
+}
+
+h3 {
+    color: #0066cc;
+    margin: 0;
+}
+
+form label, .coach-selection label, .payment-section label {
+    display: block;
+    margin: 0.5em 0 0.2em;
+}
+
+form input, form button, .coach-selection select, .coach-selection input, .payment-section input, .payment-section button {
+    width: 100%;
+    padding: 0.7em;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #004A99; /* Darker Blue */
+}
+
+.seat-button {
+    width: 40px;
+    height: 40px;
+    background-color: lightgray;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.seat-button:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+.seat-button.selected {
+    background-color: #0066cc;
+    color: white;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+
+select:focus {
+    border-color: #0066cc;
+}
+
+.coach-selection, .ticket-details, .payment-section {
+    background-color: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2em;
+}
+
+.ticket-details span, .ticket-details p {
+    font-size: 1em;
+    color: #333;
+}
+
+.payment-section h2 {
+    color: #0066cc;
+}
+
+.payment-section button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 0.7em 1.5em;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.payment-section button:hover {
+    background-color: #004A99;
+}
+
+.no-buses {
+    text-align: center;
+    font-size: 18px;
+    color: #0066cc;
+}
+
+.alert {
+    color: #004A99;
+    text-align: center;
+    font-size: 16px;
+}
+
+.train-card {
+    background-color: #f8f9fc;
+    padding: 1em;
+    border-radius: 5px;
+    margin: 0.5em 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+}
+
+.train-card h3, .train-card p {
+    margin: 0;
+    color: #333;
+}
+
+.train-card button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.train-card button:hover {
+    background-color: #004A99;
+}

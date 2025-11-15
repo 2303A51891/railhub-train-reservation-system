@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0066cc;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        main {
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .payment-method {
+            margin: 10px 0;
+        }
+
+        label {
+            font-size: 16px;
+        }
+
+        input[type="radio"] {
+            transform: scale(1.2);
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color:#1f9d02 ;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+        button.hover{
+            color: #197d03;
+        }
+        
+
+        #qrBox {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #qrBox img {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #0066cc;
+            border-radius: 10px;
+            padding: 10px;
+            background: white;
+        }
+
+        /* ✅ Payment Success Popup */
+        .upi-modal {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.6);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        .upi-modal-content {
+          background: #fff;
+          padding: 25px;
+          border-radius: 12px;
+          text-align: center;
+          width: 250px;
+          animation: scaleUp 0.4s ease;
+        }
+
+        .upi-tick {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border: 6px solid #4CAF50;
+          border-right-color: transparent;
+          border-top-color: transparent;
+          margin: 0 auto 10px;
+          animation: rotateTick 1s ease forwards;
+          position: relative;
+        }
+
+        @keyframes rotateTick {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @keyframes scaleUp {
+          from { transform: scale(0.7); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Payment Page</h1>
+</header>
+
+<main>
+    <h3>Select Payment Method:</h3>
+
+    <form id="paymentForm">
+        <div class="payment-method">
+            <label><input type="radio" name="paymentMethod" value="Google Pay" onclick="showQR()"> Google Pay</label>
+        </div>
+        <div class="payment-method">
+            <label><input type="radio" name="paymentMethod" value="Phone Pay" onclick="showQR()"> Phone Pay</label>
+        </div>
+        <div class="payment-method">
+            <label><input type="radio" name="paymentMethod" value="Debit Card" onclick="hideQR()"> Debit Card</label>
+        </div>
+    </form>
+
+    <div id="qrBox">
+        <h3>Scan & Pay</h3>
+        <img id="qrImg" src="">
+    </div>
+
+    <button onclick="confirmPayment()">Confirm Payment</button>
+</main>
+
+<!-- ✅ Success Animation Popup -->
+<div id="upiSuccessModal" class="upi-modal">
+  <div class="upi-modal-content">
+    <div class="upi-tick"></div>
+    <h3>Payment Successful!</h3>
+  </div>
+</div>
+
+<script>
+let timer;
+
+function showQR() {
+    const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+    let qrImage = document.getElementById("qrImg");
+    let qrBox = document.getElementById("qrBox");
+
+    qrBox.style.display = "block";
+
+    if(method === "Google Pay") {
+        qrImage.src = "qr-code.png";
+    } 
+    else if(method === "Phone Pay") {
+        qrImage.src = "https://i.ibb.co/5M3r4pq/phonepe-qr.png";
+    }
+
+    clearTimeout(timer);
+
+    // ✅ Auto proceed after 10 seconds
+    timer = setTimeout(() => {
+        showUPISuccess();
+        setTimeout(() => {
+            window.location.href = "ticket-details.html";
+        }, 2000);
+    }, 10000);
+}
+
+function hideQR() {
+    document.getElementById("qrBox").style.display = "none";
+    clearTimeout(timer);
+}
+
+function confirmPayment() {
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    if (!paymentMethod) {
+        alert("Please select a payment method.");
+        return;
+    }
+
+    if(paymentMethod.value === "Debit Card") {
+        alert("Redirecting to Card Payment Page...");
+        window.location.href = "ticket-details.html";
+    }
+}
+
+function showUPISuccess() {
+  document.getElementById("upiSuccessModal").style.display = "flex";
+  setTimeout(() => {
+    document.getElementById("upiSuccessModal").style.display = "none";
+  }, 1500);
+}
+
+
+
+</script>
+
+</body>
+</html>

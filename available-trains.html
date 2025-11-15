@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Trains</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Available Trains</h1>
+    </header>
+    <main>
+        <section id="trainResults">
+            <h2>Available Trains</h2>
+            <div id="trainsList"></div>
+        </section>
+    </main>
+
+    <script>
+        const trains = [
+            { name: "Shatabdi Express Delhi-Mumbai", from: "Delhi", to: "Mumbai", time: "8:00 AM", destinationTime: "12:30 PM" },
+            { name: "Rajdhani Express Mumbai-Delhi", from: "Mumbai", to: "Delhi", time: "9:00 PM", destinationTime: "6:00 AM" },
+            { name: "Duronto Express Kolkata-Delhi", from: "Kolkata", to: "Delhi", time: "7:30 AM", destinationTime: "1:30 PM" },
+            { name: "Gatimaan Express Agra-Delhi", from: "Agra", to: "Delhi", time: "6:00 AM", destinationTime: "8:30 AM" },
+            { name: "Rajdhani Express Delhi-Kolkata", from: "Delhi", to: "Kolkata", time: "10:00 PM", destinationTime: "12:30 PM" },
+            { name: "Shatabdi Express Bangalore-Chennai", from: "Bangalore", to: "Chennai", time: "8:30 AM", destinationTime: "12:00 PM" },
+            { name: "Golden Temple Express Amritsar-Delhi", from: "Amritsar", to: "Delhi", time: "7:45 AM", destinationTime: "12:30 PM" },
+            { name: "Mahananda Express Kolkata-Patna", from: "Kolkata", to: "Patna", time: "11:00 AM", destinationTime: "3:00 PM" },
+            { name: "Vande Bharat Express Delhi-Varanasi", from: "Delhi", to: "Varanasi", time: "5:00 AM", destinationTime: "9:30 AM" },
+            { name: "Howrah Mail Kolkata-Delhi", from: "Kolkata", to: "Delhi", time: "9:30 AM", destinationTime: "3:30 PM" },
+            { name: "Bangalore Express Mumbai-Bangalore", from: "Mumbai", to: "Bangalore", time: "4:00 PM", destinationTime: "8:00 PM" },
+            { name: "Hyderabad Tirupati Express", from: "Hyderabad", to: "Tirupati", time: "6:30 AM", destinationTime: "9:30 PM" },
+            { name: "Tirumala Express Hyderabad-Tirupati", from: "Hyderabad", to: "Tirupati", time: "9:00 AM", destinationTime: "12:00 PM" },
+            { name: "Sri Venkateswara Express Hyderabad-Tirupati", from: "Hyderabad", to: "Tirupati", time: "5:30 PM", destinationTime: "8:30 AM" }
+        ];
+
+        function loadTrains() {
+            const from = localStorage.getItem("from");
+            const to = localStorage.getItem("to");
+            const trainsList = document.getElementById("trainsList");
+            const results = trains.filter(train => train.from === from && train.to === to);
+
+            if (results.length === 0) {
+                trainsList.innerHTML = "<p>No trains available for the selected route.</p>";
+            } else {
+                results.forEach(train => {
+                    const trainCard = document.createElement("div");
+                    trainCard.className = "train-card";
+                    trainCard.innerHTML = `
+                        <h3><i class="fas fa-train"></i> ${train.name}</h3>
+                        <p>Departure Time: ${train.time}</p>
+                        <p>Destination Time: ${train.destinationTime}</p>
+                        <button onclick="selectTrain('${train.name}', '${train.time}', '${train.destinationTime}')">Select Train</button>
+                    `;
+                    trainsList.appendChild(trainCard);
+                });
+            }
+        }
+
+        function selectTrain(name, time, destinationTime) {
+            localStorage.setItem("selectedTrainName", name);
+            localStorage.setItem("selectedTrainTime", time);
+            localStorage.setItem("selectedTrainDestinationTime", destinationTime);
+            window.location.href = "select-coach.html";
+        }
+
+        window.onload = loadTrains;
+    </script>
+</body>
+</html>

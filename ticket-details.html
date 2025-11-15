@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ticket Details</title>
+
+<style>
+    body {
+        font-family: "Poppins", sans-serif;
+        background: #f7f9ff;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    header {
+        background: #0066cc;
+        color: white;
+        padding: 25px;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .ticket {
+        width: 90%;
+        max-width: 400px;
+        margin: 30px auto;
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        animation: fadeIn 1s ease-in-out;
+        border: 2px dashed #0066cc;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ticket-line {
+        height: 1px;
+        background: #ddd;
+        margin: 12px 0;
+    }
+
+    #ticketNumbers {
+        font-weight: bold;
+        font-size: 18px;
+        color: #0047ab;
+        letter-spacing: 2px;
+        animation: roll 2s ease-out;
+    }
+
+    @keyframes roll {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+        margin-top: 15px;
+        padding: 12px;
+        background: #0066cc;
+        color: white;
+        border: none;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .btn:hover {
+        background: #094caa;
+    }
+
+    .time-box {
+        font-size: 14px;
+        margin-top: 5px;
+        color: gray;
+    }
+</style>
+</head>
+
+<body>
+
+<header>🎫 Your Ticket is Confirmed!</header>
+
+<div class="ticket">
+    <h3>🚆 Train Ticket</h3>
+
+    <div id="ticketDetails"></div>
+    <div class="ticket-line"></div>
+
+    <h4>Seat Numbers</h4>
+    <div id="ticketNumbers"></div>
+
+    <div class="ticket-line"></div>
+    
+    <p class="time-box" id="timeBox"></p>
+</div>
+
+<button class="btn" onclick="goToDashboard()">Go to Dashboard</button>
+
+<script>
+const selectedCoach = localStorage.getItem("selectedCoach");
+const coachPrice = localStorage.getItem("coachPrice");
+const passengerCount = parseInt(localStorage.getItem("passengerCount"));
+const paymentMethod = localStorage.getItem("paymentMethod");
+
+// Generate real time
+function getFormattedTime() {
+    const now = new Date();
+    return now.toLocaleString('en-IN', { dateStyle: "medium", timeStyle: "short" });
+}
+
+document.getElementById("timeBox").innerHTML = "⏱️ Booked at: " + getFormattedTime();
+
+// Generate ticket numbers
+function generateTicketNumbers(prefix, count) {
+    const ticketNumbers = [];
+    for (let i = 0; i < count; i++) {
+        const randomNumber = Math.floor(Math.random() * 60) + 1;
+        ticketNumbers.push(`${prefix}${randomNumber}`);
+    }
+    return ticketNumbers;
+}
+
+// Coach prefix rules
+let coachPrefix = selectedCoach === "First AC" ? "A" :
+                  selectedCoach === "Second AC" ? "B" :
+                  selectedCoach === "Third AC" ? "C" : "S";
+
+// Ticket detail message
+const ticketDetailsMessage = `
+<strong>Coach:</strong> ${selectedCoach}<br>
+<strong>Price per Seat:</strong> ₹${coachPrice}<br>
+<strong>Passengers:</strong> ${passengerCount}<br>
+<strong>Total Fare:</strong> ₹${coachPrice * passengerCount}<br>
+<strong>Payment:</strong> ${paymentMethod} ✅<br>
+`;
+
+document.getElementById("ticketDetails").innerHTML = ticketDetailsMessage;
+
+// Show seat numbers
+const ticketNumbers = generateTicketNumbers(coachPrefix, passengerCount);
+document.getElementById("ticketNumbers").textContent = ticketNumbers.join(" , ");
+
+function goToDashboard() {
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>
